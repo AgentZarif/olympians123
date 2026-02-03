@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-container">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                Learn With<br>
+                <span class="highlight">Excellence</span>
+            </h1>
+            <p class="hero-subtitle">
+                Something goes here about learning and growing with our platform
+            </p>
+            <div class="hero-actions">
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-large">Start Learning</a>
+                <a href="{{ url_for('courses') }}" class="btn btn-outline btn-large">View Courses</a>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="floating-element element-1"></div>
+            <div class="floating-element element-2"></div>
+            <div class="floating-element element-3"></div>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="features-container">
+        <h2 class="section-title">Why Choose Olympians?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>Expert Courses</h3>
+                <p>Learn from industry experts with real-world experience</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Personalized Learning</h3>
+                <p>Adaptive learning paths tailored to your goals</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3>Live Classes</h3>
+                <p>Interactive sessions with real-time collaboration</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>AI Assistant</h3>
+                <p>24/7 intelligent support for your learning journey</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="cta-container">
+        <h2>Ready to Start Your Journey?</h2>
+        <p>Join thousands of students achieving excellence</p>
+        <a href="{{ url_for('register') }}" class="btn btn-primary btn-large">Get Started Today</a>
+    </div>
+</section>
+{% endblock %}

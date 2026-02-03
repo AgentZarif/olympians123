@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Exams - Olympians{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="page-header-container">
+        <h1>Examinations</h1>
+        <p>Test your knowledge and track your progress</p>
+    </div>
+</section>
+
+<section class="exams-section">
+    <div class="exams-container">
+        <div class="exams-tabs">
+            <button class="tab-btn active">Upcoming</button>
+            <button class="tab-btn">Completed</button>
+            <button class="tab-btn">Results</button>
+        </div>
+
+        <div class="exams-grid">
+            <div class="exam-card">
+                <div class="exam-header">
+                    <h3>Mathematics - Chapter 5 Test</h3>
+                    <span class="exam-status status-pending">Pending</span>
+                </div>
+                <div class="exam-info">
+                    <p><strong>Date:</strong> February 8, 2026</p>
+                    <p><strong>Duration:</strong> 90 minutes</p>
+                    <p><strong>Questions:</strong> 40</p>
+                    <p><strong>Topics:</strong> Calculus, Derivatives, Integration</p>
+                </div>
+                <button class="btn btn-primary btn-block">Start Exam</button>
+            </div>
+
+            <div class="exam-card">
+                <div class="exam-header">
+                    <h3>Physics - Quantum Mechanics Quiz</h3>
+                    <span class="exam-status status-pending">Pending</span>
+                </div>
+                <div class="exam-info">
+                    <p><strong>Date:</strong> February 10, 2026</p>
+                    <p><strong>Duration:</strong> 60 minutes</p>
+                    <p><strong>Questions:</strong> 25</p>
+                    <p><strong>Topics:</strong> Wave Functions, Uncertainty Principle</p>
+                </div>
+                <button class="btn btn-primary btn-block">Start Exam</button>
+            </div>
+
+            <div class="exam-card">
+                <div class="exam-header">
+                    <h3>Computer Science - Algorithms</h3>
+                    <span class="exam-status status-completed">Completed</span>
+                </div>
+                <div class="exam-info">
+                    <p><strong>Date:</strong> February 1, 2026</p>
+                    <p><strong>Score:</strong> 85/100</p>
+                    <p><strong>Grade:</strong> A</p>
+                </div>
+                <button class="btn btn-outline btn-block">View Results</button>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

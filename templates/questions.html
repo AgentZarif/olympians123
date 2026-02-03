@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+
+{% block title %}Olympiad Questions - Olympus{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="page-header-container">
+        <h1>অলিম্পিয়াড প্রশ্ন ব্যাংক</h1>
+        <p>বিশ্বমানের ম্যাথ অলিম্পিয়াড প্রশ্ন অনুশীলন করুন</p>
+    </div>
+</section>
+
+<section class="questions-section">
+    <div class="questions-container">
+        <div class="filters">
+            <h3>ফিল্টার করুন</h3>
+            <div class="filter-group">
+                <label>বিষয়:</label>
+                <select id="topicFilter">
+                    <option value="">সব</option>
+                    {% for topic in topics %}
+                    <option value="{{ topic }}">{{ topic }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>কঠিনতা:</label>
+                <select id="difficultyFilter">
+                    <option value="">সব</option>
+                    <option value="easy">সহজ</option>
+                    <option value="medium">মাঝারি</option>
+                    <option value="hard">কঠিন</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="questions-list">
+            {% for question in questions %}
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>{{ question.title }}</h3>
+                    <span class="difficulty-badge {{ question.difficulty }}">
+                        {% if question.difficulty == 'easy' %}সহজ{% elif question.difficulty == 'medium' %}মাঝারি{% else
+                        %}কঠিন{% endif %}
+                    </span>
+                </div>
+
+                <div class="question-meta">
+                    <span>📚 {{ question.source }}</span>
+                    {% if question.year %}<span>📅 {{ question.year }}</span>{% endif %}
+                    {% if question.topic %}<span>🏷️ {{ question.topic }}</span>{% endif %}
+                </div>
+
+                <div class="question-statement">
+                    <p><strong>প্রশ্ন:</strong> {{ question.problem_statement }}</p>
+                </div>
+
+                <button class="btn btn-primary btn-small toggle-solution" data-question-id="{{ question.id }}">
+                    সমাধান দেখুন
+                </button>
+
+                <div class="solution-container" id="solution-{{ question.id }}" style="display: none;">
+                    {% if question.solution %}
+                    <div class="solution-english">
+                        <strong>Solution (English):</strong>
+                        <p>{{ question.solution }}</p>
+                    </div>
+                    {% endif %}
+
+                    {% if question.solution_bangla %}
+                    <div class="solution-bangla">
+                        <strong>ব্যাখ্যা (বাংলা):</strong>
+                        <p>{{ question.solution_bangla }}</p>
+                    </div>
+                    {% else %}
+                    <div class="ai-explain">
+                        <button class="btn btn-outline btn-small ask-ai" data-question-id="{{ question.id }}">
+                            🤖 AI টিউটর থেকে বাংলায় ব্যাখ্যা পান
+                        </button>
+                        <div class="ai-response" id="ai-response-{{ question.id }}"></div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<script>
+    // Toggle solution visibility
+    document.querySelectorAll('.toggle-solution').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const questionId = this.dataset.questionId;
+            const solution = document.getElementById(`solution-${questionId}`);
+
+            if (solution.style.display === 'none') {
+                solution.style.display = 'block';
+                this.textContent = 'সমাধান লুকান';
+            } else {
+                solution.style.display = 'none';
+                this.textContent = 'সমাধান দেখুন';
+            }
+        });
+    });
+
+    // Ask AI for Bangla explanation
+    document.querySelectorAll('.ask-ai').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const questionId = this.dataset.questionId;
+            const responseDiv = document.getElementById(`ai-response-${questionId}`);
+
+            responseDiv.innerHTML = '<p class="loading">⏳ AI টিউটর চিন্তা করছে...</p>';
+
+            // Get question text
+            const questionCard = this.closest('.question-card');
+            const problemStatement = questionCard.querySelector('.question-statement p').textContent;
+
+            fetch('/api/ai/ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: `এই প্রশ্নটির সমাধান বাংলায় ব্যাখ্যা কর: ${problemStatement}`
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    responseDiv.innerHTML = `<div class="ai-answer">${data.response || data.error}</div>`;
+                })
+                .catch(err => {
+                    responseDiv.innerHTML = '<p class="error">ত্রুটি! আবার চেষ্টা করুন।</p>';
+                });
+        });
+    });
+</script>
+
+<style>
+    .questions-section {
+        padding: 3rem 2rem;
+        background: var(--bg-light);
+        min-height: calc(100vh - 70px);
+    }
+
+    .questions-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .filters {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 16px;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-md);
+    }
+
+    .filter-group {
+        display: inline-block;
+        margin-right: 1.5rem;
+        margin-top: 1rem;
+    }
+
+    .filter-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .filter-group select {
+        padding: 0.5rem 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-family: var(--font-primary);
+    }
+
+    .questions-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .question-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: var(--shadow-md);
+        transition: var(--transition-base);
+    }
+
+    .question-card:hover {
+        box-shadow: var(--shadow-lg);
+    }
+
+    .question-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 1rem;
+    }
+
+    .question-header h3 {
+        font-size: 1.25rem;
+        color: var(--primary-blue);
+    }
+
+    .difficulty-badge {
+        padding: 0.25rem 1rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+
+    .difficulty-badge.easy {
+        background: #d1fae5;
+        color: #065f46;
+    }
+
+    .difficulty-badge.medium {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    .difficulty-badge.hard {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    .question-meta {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 1rem;
+        font-size: 0.875rem;
+        color: var(--text-light);
+    }
+
+    .question-statement {
+        background: var(--bg-light);
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        line-height: 1.8;
+    }
+
+    .solution-container {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 2px dashed #e5e7eb;
+    }
+
+    .solution-english,
+    .solution-bangla {
+        background: #f0f9ff;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        border-left: 4px solid var(--primary-blue);
+    }
+
+    .ai-explain {
+        margin-top: 1rem;
+    }
+
+    .ai-response {
+        margin-top: 1rem;
+        padding: 1rem;
+        background: #f9fafb;
+        border-radius: 12px;
+    }
+
+    .loading {
+        color: var(--text-light);
+        font-style: italic;
+    }
+
+    .ai-answer {
+        line-height: 1.8;
+        white-space: pre-wrap;
+    }
+</style>
+{% endblock %}

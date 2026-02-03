@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+
+{% block title %}Registration - Olympus{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>নতুন অ্যাকাউন্ট তৈরি করুন</h1>
+                <p>Olympus-এ যোগ দিন এবং আপনার গণিত যাত্রা শুরু করুন</p>
+            </div>
+
+            <form method="POST" action="/register" class="auth-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">পূর্ণ নাম <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" required placeholder="যেমন: রহিম আহমেদ">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nickname">ডাকনাম / Nickname</label>
+                        <input type="text" id="nickname" name="nickname" placeholder="যেমন: রহিম (optional)">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">ইমেইল <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required placeholder="example@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mobile">মোবাইল নম্বর <span class="required">*</span></label>
+                        <input type="tel" id="mobile" name="mobile_number" required placeholder="01XXXXXXXXX"
+                            pattern="[0-9]{11}">
+                        <small>১১ সংখ্যার বাংলাদেশি নম্বর</small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="class_level">শ্রেণী <span class="required">*</span></label>
+                        <select id="class_level" name="class_level" required>
+                            <option value="">শ্রেণী নির্বাচন করুন</option>
+                            <option value="Class 3">Class 3</option>
+                            <option value="Class 4">Class 4</option>
+                            <option value="Class 5">Class 5</option>
+                            <option value="Class 6">Class 6</option>
+                            <option value="Class 7">Class 7</option>
+                            <option value="Class 8">Class 8</option>
+                            <option value="Class 9">Class 9</option>
+                            <option value="Class 10">Class 10</option>
+                            <option value="Class 11">Class 11</option>
+                            <option value="Class 12">Class 12</option>
+                            <option value="University">University</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="school_name">স্কুল/কলেজের নাম <span class="required">*</span></label>
+                        <input type="text" id="school_name" name="school_name" required
+                            placeholder="যেমন: ঢাকা কলেজিয়েট স্কুল">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">পাসওয়ার্ড <span class="required">*</span></label>
+                        <input type="password" id="password" name="password" required minlength="6"
+                            placeholder="কমপক্ষে ৬ অক্ষর">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm_password">পাসওয়ার্ড নিশ্চিত করুন <span class="required">*</span></label>
+                        <input type="password" id="confirm_password" name="confirm_password" required minlength="6"
+                            placeholder="পাসওয়ার্ড পুনরায় লিখুন">
+                    </div>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label>
+                        <input type="checkbox" name="terms" required>
+                        আমি Olympus-এর <a href="/terms">শর্তাবলী</a> এবং <a href="/privacy">গোপনীয়তা নীতি</a> মেনে
+                        নিচ্ছি
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-large">রেজিস্ট্রেশন সম্পন্ন করুন</button>
+
+                <p class="auth-footer">
+                    ইতিমধ্যে অ্যাকাউন্ট আছে? <a href="/login">লগইন করুন</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+    .auth-section {
+        padding: 3rem 1rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+    }
+
+    .auth-container {
+        max-width: 800px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .auth-card {
+        background: white;
+        border-radius: 20px;
+        padding: 3rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .auth-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+
+    .auth-header h1 {
+        font-size: 2rem;
+        color: var(--primary-blue);
+        margin-bottom: 0.5rem;
+    }
+
+    .auth-header p {
+        color: var(--text-light);
+        font-size: 1.05rem;
+    }
+
+    .auth-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        color: var(--text-dark);
+        font-size: 0.95rem;
+    }
+
+    .required {
+        color: #ef4444;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 0.875rem;
+        border: 2px solid #cbd5e1;
+        background-color: #f8fafc;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-group small {
+        font-size: 0.85rem;
+        color: var(--text-light);
+    }
+
+    .checkbox-group {
+        margin-top: 0.5rem;
+    }
+
+    .checkbox-group label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: normal;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+        width: auto;
+    }
+
+    .checkbox-group a {
+        color: var(--primary-blue);
+        text-decoration: underline;
+    }
+
+    .btn-large {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        margin-top: 1rem;
+    }
+
+    .auth-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: var(--text-light);
+    }
+
+    .auth-footer a {
+        color: var(--primary-blue);
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .auth-footer a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+    // Password confirmation validation
+    document.querySelector('.auth-form').addEventListener('submit', function (e) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm_password').value;
+
+        if (password !== confirmPassword) {
+            e.preventDefault();
+            alert('পাসওয়ার্ড মিলছে না! অনুগ্রহ করে আবার চেষ্টা করুন।');
+            document.getElementById('confirm_password').focus();
+        }
+    });
+
+    // Mobile number validation (Bangladesh format)
+    document.getElementById('mobile').addEventListener('input', function (e) {
+        this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);
+    });
+</script>
+{% endblock %}

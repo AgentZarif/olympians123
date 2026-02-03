@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+
+{% block title %}Resources - Olympus{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="page-header-container">
+        <h1>শিক্ষা সামগ্রী ও সম্পদ</h1>
+        <p>অলিম্পিয়াড প্রস্তুতির জন্য প্রশ্ন ব্যাংক এবং অধ্যয়ন উপকরণ</p>
+    </div>
+</section>
+
+<section class="resources-section">
+    <div class="resources-container">
+
+        <!-- Olympiad Question Bank -->
+        <div class="resource-category">
+            <div class="category-header">
+                <h2>📝 অলিম্পিয়াড প্রশ্ন ব্যালংক</h2>
+                <p>বিশ্বমানের অল্পিয়াড প্রশ্ন অনুশীলন করুন</p>
+            </div>
+
+            <div class="questions-grid">
+                <div class="question-resource">
+                    <h3>🏆 BdMO (Bangladesh Math Olympiad)</h3>
+                    <p>জাতীয় গণিত অলিম্পিয়াডের আঞ্চলিক এবং জাতীয় পর্যায়ের প্রশ্ন</p>
+                    <a href="/questions?source=bdmo" class="btn btn-primary">প্রশ্ন দেখুন</a>
+                </div>
+
+                <div class="question-resource">
+                    <h3>🌍 IMO (International Math Olympiad)</h3>
+                    <p>আন্তর্জাতিক গণিত অলিম্পিয়াডের ঐতিহাসিক প্রশ্ন</p>
+                    <a href="/questions?source=imo" class="btn btn-primary">প্রশ্ন দেখুন</a>
+                </div>
+
+                <div class="question-resource">
+                    <h3>🇺🇸 AIME & AMC</h3>
+                    <p>আমেরিকান ম্যাথ কম্পিটিশনের চ্যালেঞ্জিং সমস্যা</p>
+                    <a href="/questions?source=aime" class="btn btn-primary">প্রশ্ন দেখুন</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Study Materials -->
+        <div class="resource-category">
+            <div class="category-header">
+                <h2>📚 অধ্যয়ন উপকরণ</h2>
+                <p>গণিত অলিম্পিয়াডের বিভিন্ন বিষয়ের উপর নির্দেশিকা</p>
+            </div>
+
+            <div class="materials-list">
+                <div class="material-item">
+                    <span class="material-icon">🔢</span>
+                    <div class="material-info">
+                        <h4>সংখ্যাতত্ত্ব (Number Theory)</h4>
+                        <p>Divisibility, Prime Numbers, Modular Arithmetic</p>
+                    </div>
+                    <a href="#" class="btn btn-outline btn-small">শীঘ্রই</a>
+                </div>
+
+                <div class="material-item">
+                    <span class="material-icon">📐</span>
+                    <div class="material-info">
+                        <h4>জ্যামিতি (Geometry)</h4>
+                        <p>Triangles, Circles, Transformations</p>
+                    </div>
+                    <a href="#" class="btn btn-outline btn-small">শীঘ্রই</a>
+                </div>
+
+                <div class="material-item">
+                    <span class="material-icon">🎲</span>
+                    <div class="material-info">
+                        <h4>কম্বিনেটরিক্স (Combinatorics)</h4>
+                        <p>Permutations, Combinations, Graph Theory</p>
+                    </div>
+                    <a href="#" class="btn btn-outline btn-small">শীঘ্রই</a>
+                </div>
+
+                <div class="material-item">
+                    <span class="material-icon">📊</span>
+                    <div class="material-info">
+                        <h4>বীজগণিত (Algebra)</h4>
+                        <p>Equations, Inequalities, Functions</p>
+                    </div>
+                    <a href="#" class="btn btn-outline btn-small">শীঘ্রই</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Practice Resources -->
+        <div class="resource-category">
+            <div class="category-header">
+                <h2>🎯 অনুশীলন সম্পদ</h2>
+                <p>নিয়মিত অনুশীলনের জন্য অতিরিক্ত উপকরণ</p>
+            </div>
+
+            <div class="practice-grid">
+                <div class="practice-card">
+                    <h4>🧮 দৈনিক সমস্যা চ্যালেঞ্জ</h4>
+                    <p>প্রতিদিন নতুন অলিম্পিয়াড-স্তরের সমস্যা</p>
+                    <span class="coming-soon">Coming Soon</span>
+                </div>
+
+                <div class="practice-card">
+                    <h4>📝 মক পরীক্ষা</h4>
+                    <p>বাস্তব অলিম্পিয়াড পরিবেশে অনুশীলন করুন</p>
+                    <span class="coming-soon">Coming Soon</span>
+                </div>
+
+                <div class="practice-card">
+                    <h4>💡 টিপস ও কৌশল</h4>
+                    <p>বিশেষজ্ঞদের থেকে সমস্যা সমাধানের কৌশল</p>
+                    <span class="coming-soon">Coming Soon</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    .resources-section {
+        padding: 3rem 2rem;
+        background: var(--bg-light);
+        min-height: calc(100vh - 70px);
+    }
+
+    .resources-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .resource-category {
+        background: white;
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: var(--shadow-lg);
+    }
+
+    .category-header {
+        margin-bottom: 2rem;
+        border-bottom: 3px solid var(--primary-blue);
+        padding-bottom: 1rem;
+    }
+
+    .category-header h2 {
+        font-size: 1.75rem;
+        color: var(--primary-blue);
+        margin-bottom: 0.5rem;
+    }
+
+    .category-header p {
+        color: var(--text-light);
+        font-size: 1.05rem;
+    }
+
+    .questions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .question-resource {
+        background: linear-gradient(135deg, #f6f8fb 0%, #ffffff 100%);
+        padding: 2rem;
+        border-radius: 16px;
+        border: 2px solid #e5e7eb;
+        transition: all 0.3s ease;
+    }
+
+    .question-resource:hover {
+        border-color: var(--primary-blue);
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .question-resource h3 {
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+        font-size: 1.25rem;
+    }
+
+    .question-resource p {
+        color: var(--text-light);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+
+    .materials-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .material-item {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        background: #f9fafb;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .material-item:hover {
+        background: #f3f4f6;
+        transform: translateX(10px);
+    }
+
+    .material-icon {
+        font-size: 2.5rem;
+        flex-shrink: 0;
+    }
+
+    .material-info {
+        flex-grow: 1;
+    }
+
+    .material-info h4 {
+        color: var(--text-dark);
+        margin-bottom: 0.25rem;
+        font-size: 1.1rem;
+    }
+
+    .material-info p {
+        color: var(--text-light);
+        font-size: 0.9rem;
+    }
+
+    .practice-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .practice-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 16px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .practice-card h4 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    .practice-card p {
+        font-size: 0.95rem;
+        opacity: 0.9;
+        margin-bottom: 1rem;
+    }
+
+    .coming-soon {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}

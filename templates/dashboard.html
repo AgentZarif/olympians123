@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Olympians{% endblock %}
+
+{% block content %}
+<section class="dashboard-section">
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>Welcome, {{ user.name }}! 👋</h1>
+            <p>Here's your learning overview</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📚</div>
+                <div class="stat-value">{{ stats.enrolled_courses }}</div>
+                <div class="stat-label">Enrolled Courses</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-value">{{ stats.completed_exams }}</div>
+                <div class="stat-label">Completed Exams</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏰</div>
+                <div class="stat-value">{{ stats.learning_hours|int }}h</div>
+                <div class="stat-label">Learning Time</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-value">{{ stats.avg_score }}%</div>
+                <div class="stat-label">Average Score</div>
+            </div>
+        </div>
+
+        <div class="dashboard-sections">
+            <div class="section-card">
+                <h2>Recent Activity</h2>
+                <div class="activity-list">
+                    {% if recent_submissions %}
+                    {% for sub in recent_submissions %}
+                    <div class="activity-item">
+                        <span class="activity-icon">📝</span>
+                        <div class="activity-content">
+                            <p><strong>Exam Completed:</strong> {{ sub.exam.title if sub.exam else 'Unknown Exam' }}</p>
+                            <span class="activity-time">Score: {{ sub.score }}% • {{ sub.submitted_at.strftime('%d %b,
+                                %H:%M') }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="activity-item">
+                        <span class="activity-icon">✨</span>
+                        <div class="activity-content">
+                            <p><strong>Welcome to Olympus!</strong></p>
+                            <span class="activity-time">Start learning by exploring courses.</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2>Upcoming Classes</h2>
+                <div class="upcoming-list">
+                    {% if upcoming_classes %}
+                    {% for class in upcoming_classes %}
+                    <div class="upcoming-item">
+                        <div class="upcoming-date">
+                            <span class="day">{{ class.scheduled_start.strftime('%d') }}</span>
+                            <span class="month">{{ class.scheduled_start.strftime('%b')|upper }}</span>
+                        </div>
+                        <div class="upcoming-details">
+                            <h3>{{ class.title }}</h3>
+                            <p>{{ class.scheduled_start.strftime('%I:%M %p') }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p class="no-data">No classes scheduled currently.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,309 @@
+{% extends "base.html" %}
+
+{% block title %}Courses - Olympus{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="page-header-container">
+        <h1>আমাদের কোর্সসমূহ</h1>
+        <p>বিশেষজ্ঞ শিক্ষকদের সাথে গণিত অলিম্পিয়াডের জন্য প্রস্তুতি নিন</p>
+    </div>
+</section>
+
+<section class="courses-section">
+    <div class="courses-container">
+        {% for course in courses %}
+        <div
+            class="course-card {% if course.difficulty == 'beginner' %}course-primary{% elif course.difficulty == 'intermediate' %}course-intermediate{% else %}course-advanced{% endif %}">
+            <div class="course-icon">
+                {{ course.image_url }}
+            </div>
+
+            <div class="course-header">
+                <h2>{{ course.title }}</h2>
+                <span class="course-level">
+                    {% if course.difficulty == 'beginner' %}Foundation Level
+                    {% elif course.difficulty == 'intermediate' %}Intermediate Level
+                    {% else %}Advanced Level{% endif %}
+                </span>
+            </div>
+
+            <div class="course-meta">
+                <div class="meta-item">
+                    <span class="icon">👨‍🏫</span>
+                    <span>{{ course.instructor_name }}</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">⏱️</span>
+                    <span>{{ course.duration_hours }} Hours</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">📚</span>
+                    <span>{{ course.lesson_count }} Classes</span>
+                </div>
+            </div>
+
+            <div class="course-description">
+                {{ course.description | safe }}
+            </div>
+
+            <div class="course-actions">
+                <a href="#" class="btn btn-primary view-details" data-course-id="{{ course.id }}">
+                    বিস্তারিত দেখুন
+                </a>
+                <a href="https://forms.google.com" target="_blank" class="btn btn-outline enroll-btn">
+                    📝 ভর্তি হন
+                </a>
+            </div>
+
+            <!-- Detailed Description (Hidden by default) -->
+            <div class="course-details" id="details-{{ course.id }}" style="display: none;">
+                <div class="details-content">
+                    <h3>কোর্স সম্পর্কে বিস্তারিত</h3>
+                    <div class="description-full">
+                        {{ course.description | replace('\n\n', '</p>
+                        <p>') | replace('\n', '<br>') | safe }}
+                    </div>
+
+                    {% if course.difficulty == 'beginner' %}
+                    <div class="highlights">
+                        <h4>✨ মূল বৈশিষ্ট্য:</h4>
+                        <ul>
+                            <li>ক্লাস ৩–৫ শিক্ষার্থীদের জন্য আদর্শ</li>
+                            <li>সপ্তাহে ৩টি লাইভ ক্লাস (প্রতিটি ৬০ মিনিট)</li>
+                            <li>রেকর্ডেড সেশন সহ</li>
+                            <li>সাপ্তাহিক ছোট পরীক্ষা</li>
+                            <li>মাসিক মূল্যায়ন টেস্ট</li>
+                            <li>ফাইনাল সার্টিফিকেট পরীক্ষা</li>
+                            <li>নিয়মিত সন্দেহ সমাধান সহায়তা</li>
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    <p class="enrollment-note">
+                        <strong>📢 বিঃদ্রঃ</strong> সম্পূর্ণ সিলেবাস, সময়সূচী এবং ভর্তির তথ্য শীঘ্রই শেয়ার করা হবে।
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<script>
+    // Toggle course details
+    document.querySelectorAll('.view-details').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const courseId = this.dataset.courseId;
+            const details = document.getElementById(`details-${courseId}`);
+
+            if (details.style.display === 'none') {
+                details.style.display = 'block';
+                this.textContent = 'সংক্ষিপ্ত দেখুন';
+            } else {
+                details.style.display = 'none';
+                this.textContent = 'বিস্তারিত দেখুন';
+            }
+        });
+    });
+</script>
+
+<style>
+    .courses-section {
+        padding: 3rem 2rem;
+        background: var(--bg-light);
+        min-height: calc(100vh - 70px);
+    }
+
+    .courses-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        gap: 2rem;
+    }
+
+    .course-card {
+        background: white;
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: var(--shadow-lg);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-left: 6px solid var(--primary-blue);
+    }
+
+    .course-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .course-primary {
+        border-left-color: #10b981;
+    }
+
+    .course-intermediate {
+        border-left-color: #f59e0b;
+    }
+
+    .course-advanced {
+        border-left-color: #ef4444;
+    }
+
+    .course-icon {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .course-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .course-header h2 {
+        font-size: 1.75rem;
+        color: var(--primary-blue);
+        margin-bottom: 0.5rem;
+    }
+
+    .course-level {
+        display: inline-block;
+        padding: 0.25rem 1rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+
+    .course-meta {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.95rem;
+        color: var(--text-light);
+    }
+
+    .meta-item .icon {
+        font-size: 1.25rem;
+    }
+
+    .course-description {
+        color: var(--text-dark);
+        line-height: 1.8;
+        margin-bottom: 2rem;
+        white-space: pre-line;
+        max-height: 150px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .course-description::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+        background: linear-gradient(transparent, white);
+    }
+
+    .course-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .enroll-btn {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        border: none;
+    }
+
+    .enroll-btn:hover {
+        background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        transform: translateY(-2px);
+    }
+
+    .course-details {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 2px dashed #e5e7eb;
+        animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .details-content {
+        background: #f9fafb;
+        padding: 2rem;
+        border-radius: 16px;
+    }
+
+    .details-content h3 {
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+    }
+
+    .description-full {
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+    }
+
+    .highlights {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 1.5rem 0;
+        border-left: 4px solid var(--gold);
+    }
+
+    .highlights h4 {
+        color: var(--gold);
+        margin-bottom: 1rem;
+    }
+
+    .highlights ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .highlights li {
+        padding: 0.5rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+    }
+
+    .highlights li::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: var(--gold);
+        font-weight: bold;
+    }
+
+    .enrollment-note {
+        background: #eff6ff;
+        padding: 1rem;
+        border-radius: 8px;
+        border-left: 4px solid #3b82f6;
+        margin-top: 1.5rem;
+    }
+</style>
+{% endblock %}
